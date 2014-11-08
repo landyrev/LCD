@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    stm32f2xx_it.h
-  * @date    26/10/2014 21:06:43
+  * @date    08/11/2014 23:47:07
   * @brief   This file contains the headers of the interrupt handlers.
   ******************************************************************************
   *
@@ -47,7 +47,6 @@
 /* Exported functions ------------------------------------------------------- */
 
 void SysTick_Handler(void);
-void SPI2_IRQHandler(void);
 
 #ifdef __cplusplus
 }

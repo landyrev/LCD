@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * File Name          : main.c
-  * Date               : 26/10/2014 21:06:44
+  * Date               : 08/11/2014 23:47:08
   * Description        : Main program body
   ******************************************************************************
   *
@@ -38,6 +38,7 @@
 /* USER CODE BEGIN Includes */
 #include "LCD.h"
 #include <string.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -54,7 +55,7 @@ static void MX_GPIO_Init(void);
 static void MX_SPI2_Init(void);
 
 /* USER CODE BEGIN PFP */
-void itoa(int n, char s[]);
+
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -85,16 +86,18 @@ int main(void)
 	str="Cotique love Kisa";
 	writeToLCD(str);
 	SPI_Data=0;
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_15,GPIO_PIN_SET);
+	uint8_t SPIData;
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN 3 */
 	/* Infinite loop */
 	while (1)
 	{
-		clearLCD();
-		HAL_SPI_Receive(&hspi2,&SPI_Data,sizeof(uint8_t),0x100);
-		itoa(SPI_Data, str);
-		writeToLCD(str);
+		SPIData=77;
+		HAL_SPI_Receive(&hspi2,&SPIData,1,0x200);
+		printf("Message=%i\n",SPIData);
+		printf("Last Error = %#010x\n", HAL_SPI_GetError(&hspi2));
 	}
   /* USER CODE END 3 */
 
@@ -170,34 +173,7 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-/* reverse:  переворачиваем строку s на месте */
-void reverse(char s[])
-{
-    int i, j;
-    char c;
 
-    for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
-        c = s[i];
-        s[i] = s[j];
-        s[j] = c;
-    }
-}
-
-void itoa(int n, char s[])
-{
-	int i, sign;
-
-	if ((sign = n) < 0)  /* записываем знак */
-		n = -n;          /* делаем n положительным числом */
-	i = 0;
-	do {       /* генерируем цифры в обратном порядке */
-		s[i++] = n % 10 + '0';   /* берем следующую цифру */
-	} while ((n /= 10) > 0);     /* удаляем */
-	if (sign < 0)
-		s[i++] = '-';
-	s[i] = '\0';
-	reverse(s);
-}
 /* USER CODE END 4 */
 
 #ifdef USE_FULL_ASSERT

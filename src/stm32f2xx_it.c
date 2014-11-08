@@ -1,7 +1,7 @@
 /**
   ******************************************************************************
   * @file    stm32f2xx_it.c
-  * @date    26/10/2014 21:06:43
+  * @date    08/11/2014 23:47:07
   * @brief   Interrupt Service Routines.
   ******************************************************************************
   *
@@ -36,11 +36,10 @@
 #include "stm32f2xx.h"
 #include "stm32f2xx_it.h"
 /* USER CODE BEGIN 0 */
-
+#include "LCD.h"
+#include <stdio.h>
 /* USER CODE END 0 */
 /* External variables --------------------------------------------------------*/
-
-extern SPI_HandleTypeDef hspi2;
 
 /******************************************************************************/
 /*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
@@ -52,28 +51,11 @@ extern SPI_HandleTypeDef hspi2;
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
   /* USER CODE END SysTick_IRQn 1 */
-}
-
-/**
-* @brief This function handles SPI2 global interrupt.
-*/
-void SPI2_IRQHandler(void)
-{
-  /* USER CODE BEGIN SPI2_IRQn 0 */
-
-  /* USER CODE END SPI2_IRQn 0 */
-  HAL_NVIC_ClearPendingIRQ(SPI2_IRQn);
-  HAL_SPI_IRQHandler(&hspi2);
-  /* USER CODE BEGIN SPI2_IRQn 1 */
-
-  /* USER CODE END SPI2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
